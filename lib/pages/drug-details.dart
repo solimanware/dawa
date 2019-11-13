@@ -30,16 +30,24 @@ class _DrugDetailsPageState extends State<DrugDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-    child: Column(children: <Widget>[
-      DrugDetailsCard(drug),
-      Align(
-        alignment: Alignment.centerLeft,
-        child: Padding(padding: EdgeInsets.only(left:24),child: Text("Similars:",textAlign: TextAlign.left,style: TextStyle(fontSize: 25),),),
+        body: SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          DrugDetailsCard(drug),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+              padding: EdgeInsets.only(left: 24, top: 10),
+              child: Text(
+                "Similars:",
+                textAlign: TextAlign.left,
+                style: TextStyle(fontSize: 25),
+              ),
+            ),
+          ),
+          SimilarDrugs()
+        ],
       ),
-
-      SimilarDrugs()
-    ],),
     ));
   }
 
@@ -66,20 +74,29 @@ class _DrugDetailsPageState extends State<DrugDetailsPage> {
                 Align(
                   child: Text(drug.activeingredient,
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 22, color: Colors.deepPurple)),
+                      style: TextStyle(
+                          fontSize: 17,
+                          color: Colors.deepPurple,
+                          decoration: TextDecoration.underline)),
                 ),
                 Row(
                   children: <Widget>[
                     Text("Price: ", style: TextStyle(fontSize: 20)),
                     Text(drug.price,
-                        style: TextStyle(fontSize: 22, color: Colors.red))
+                        style: TextStyle(
+                            fontSize: 22,
+                            color: Colors.red,
+                            decoration: TextDecoration.underline))
                   ],
                 ),
                 Text("Drug Group: ", style: TextStyle(fontSize: 20)),
                 Padding(
                   child: Text(
                     drug.group,
-                    style: TextStyle(fontSize: 22, color: Colors.deepPurple),
+                    style: TextStyle(
+                        fontSize: 22,
+                        color: Colors.deepPurple,
+                        decoration: TextDecoration.underline),
                   ),
                   padding: EdgeInsets.only(left: 24),
                 ),
@@ -87,18 +104,12 @@ class _DrugDetailsPageState extends State<DrugDetailsPage> {
                 Padding(
                   child: Text(
                     drug.company,
-                    style: TextStyle(fontSize: 15, color: Colors.deepPurple),
+                    style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.deepPurple,
+                        decoration: TextDecoration.underline),
                   ),
                   padding: EdgeInsets.only(left: 24),
-                ),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 10, right: 10),
-                    child: Text("Report a corection",
-                        style:
-                            TextStyle(fontSize: 15, color: Colors.deepPurple)),
-                  ),
                 ),
                 if (_shouldShowDetailedPharma)
                   Align(
@@ -181,6 +192,17 @@ class _DrugDetailsPageState extends State<DrugDetailsPage> {
                     ],
                   ),
                 ),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 5,bottom: 10, right: 10),
+                    child: Text("Report a corection",
+                        style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.redAccent,
+                            decoration: TextDecoration.underline)),
+                  ),
+                )
               ],
             ))
       ],
@@ -210,38 +232,44 @@ class _DrugDetailsPageState extends State<DrugDetailsPage> {
   Widget similarsListView(snapshot) {
     List<Drug> similars = snapshot.data;
 
-      return Container(
-        child: Column(children:[
-          for(var similar in similars ) similarCard(similar)
-        ]),
-      );
-
-
+    return Container(
+      child: Column(
+          children: [for (var similar in similars) similarCard(similar)]),
+    );
   }
 
   Widget similarCard(Drug drug) {
     return Card(
-      margin: EdgeInsets.only(top: 10,left: 24,right: 24),
-      child: Padding(
-          padding: EdgeInsets.all(10),
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                child: Text(
-                  drug.tradename,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontSize: 20),
-                ),
+        margin: EdgeInsets.only(top: 10, left: 24, right: 24),
+        child: GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => DrugDetailsPage(drug: drug, drugs: drugs),
               ),
-              Text(
-                drug.price,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(color: Colors.red, fontSize: 20),
-                textAlign: TextAlign.left,
-              ),
-            ],
-          )),
-    );
+            );
+          },
+          child: Padding(
+              padding: EdgeInsets.all(10),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Text(
+                      drug.tradename,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
+                  Text(
+                    drug.price,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(color: Colors.red, fontSize: 20),
+                    textAlign: TextAlign.left,
+                  ),
+                ],
+              )),
+        ));
   }
 }
 
