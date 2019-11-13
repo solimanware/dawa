@@ -6,7 +6,7 @@ void main() {
   //MaterialApp is a boiler plate from cross platform mobile material design prinsibles and components
   runApp(MaterialApp(
     debugShowCheckedModeBanner:false,
-    title: 'drug zone',
+    title: 'Dawa Pro',
     theme: ThemeData(
       // Define the default Brightness and Colors
       brightness: Brightness.light,
