@@ -12,6 +12,7 @@ class _DrugPageState extends State<DrugPage> {
       new StreamController<List<Drug>>.broadcast();
   String term = "";
   String searchBy = "tradename";
+  String searchByText = "Tradename";
   final objectSchema = {
     "id":"ID",
     "tradename": "Trade Name",
@@ -136,7 +137,9 @@ class _DrugPageState extends State<DrugPage> {
                   //open options
                   filterDialog().then((res) {
                     setState(() {
-                      searchBy = objectSchema[res];
+                      searchByText = objectSchema[res];
+                      searchBy = res;
+                      print(searchByText);
                     });
                   });
                 },
@@ -148,7 +151,7 @@ class _DrugPageState extends State<DrugPage> {
                 child: TextField(
                   decoration: InputDecoration(
                       border: InputBorder.none,
-                      hintText: "Search by " + searchBy +" ..."),
+                      hintText: "Search by " + searchByText +" ..."),
                   onChanged: onTextChanged,
                 ),
               ),
